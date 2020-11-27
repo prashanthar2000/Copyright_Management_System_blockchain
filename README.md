@@ -1,3 +1,13 @@
-# Blockchain
-Blockchain for Copyright management.
-This platform can be used to commit and verify various copyright relating transactions, this platform is implemented on the concepts of blockchain making it more secure for the transaction and verification of the copyright issues.
+# basic_user_contract
+Basic etherium contract for storing user using python and flask
+
+### how to run
+source venv/bin/activate
+
+run  ganache-cli in a different terminal
+python contract.py
+
+
+u can see contract deployment hash ...etc in ganache 
+u can all the function by using contract.function.functionname.call()
+
