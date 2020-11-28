@@ -2,8 +2,8 @@ from backend import app , db ,  bcrypt
 from flask import render_template, url_for, flash, redirect, request, abort
 from backend.contract import contract #function to contract blockchain
 from flask_login import login_user, current_user, logout_user, login_required
-from backend.forms import  LoginForm
-from backend.models import User
+from backend.forms import  LoginForm , RegisterForm
+from backend.models import User 
 
 
 @app.route('/')
@@ -34,9 +34,99 @@ def login():
 
 @app.route('/register' , methods=['GET' , "POST"])
 def register():
-    return render_template('main.html')
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RegisterForm()
+    if form.validate_on_submit():
+        try:
+            if contract.function.insertUser(form.eth_address.data ,form.username, "owner" ).call():
+                hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+                user = User(username=form.username.data, eth_address=form.eth_address.data, password=hashed_password)
+                db.session.add(user)
+                db.session.commit()
+                flash('Your account has been created! You are now able to log in', 'success')
+                return redirect(url_for('login'))
+        except:
+            flash("Error occured while processing please try again " ,'danger')
+            return render_template('main.html' , form=form)
+
+    return render_template('main.html', title='Register', form=form)
 
 
+@app.route("/createtoken" , methods=["GET" , "POST"])
+@login_required
+def createtoken():
+    try:
+        #not sure about this part i havent tested it yet
+        contract.function.createtoken(current_user.eth_address).call()
+        flash('Your token has been created!', 'success')
+        return redirect(url_for('login'))
+
+    except:
+        flash("Error occured while processing please try again " ,'danger')
+        return render_template('main.html')#change this
+
+
+@app.route('/transfertokens', methods=["GET" , "POST"])
+@login_required
+def transfertokens():
+    try:
+        contract.function.transfertokens(current_user.eth_address, request.data['token']).call()
+        flash("transaction successful" , 'success')
+        return redirect(url_for('main.html'))
+    except:
+        flash("Error occured while processing please try again " ,'danger')
+        return render_template('main.html')#change this 
+
+
+@app.route('/getnumberoftokens')
+def getnumberoftokens():
+    try:
+        return contract.function.getnumberoftokens().call()
+        # flash("transaction successful" , 'success')
+        # return redirect(url_for('main.html'))
+    except:
+        flash("Error occured while processing please try again " ,'danger')
+        return render_template('main.html')#change this 
+
+
+@app.route('/getUserCount')
+def getUserCount():
+    try:
+        return contract.function.getUserCount().call()
+    
+    except:
+        flash("Error occured while processing please try again " ,'danger')
+        return render_template('main.html')#change this 
+
+
+
+
+@app.route("/getnumberoftokenownedbyuser")
+def getnumberoftokenownedbyuser():
+    try:
+        return contract.function.getnumberoftokenownedbyuser(request.args.get('eth_address')).call()
+    
+    except:
+        flash("Error occured while processing please try again " ,'danger')
+        return render_template('main.html')#change this 
+    
+
+@app.route("/getUserinfo")
+def getUserinfo():
+    try :
+        return contract.functions.getUserinfo(request.args.get("eth_address")).call()
+    except:
+        flash("Error occured while processing please try again " ,'danger')
+        return render_template('main.html')#change this 
+
+@app.route("/gettokenowner")
+def gettokenowner():
+    try :
+        return contract.functions.gettokenowner(request.args.get("id")).call()
+    except:
+        flash("Error occured while processing please try again " ,'danger')
+        return render_template('main.html')#change this 
 
 @app.route("/logout")
 def logout():
