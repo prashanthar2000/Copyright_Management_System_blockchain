@@ -14,17 +14,18 @@
             <div class="nav-wrapper">
               <div class="left-side">
                 <div class="nav-link-wrapper active-nav-link">
-                  <a href="index.html">Home</a>
+                  <a href="{{url_for('login')}}">Login</a>
                 </div>
         
                 <div class="nav-link-wrapper">
-                  <a href="about.html">About</a>
+                  <a href="{{url_for('home')}}">About</a>
                 </div>
               </div>
             </div>
     
         <br>
 	<center>
+    
 	<form action="/submit" id="textform" method="post">
 	    <textarea class="right_desc" rows="4" cols="50" placeholder="enter the copyright description......"></textarea>
     </br>
