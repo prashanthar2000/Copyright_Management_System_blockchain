@@ -14,12 +14,12 @@ def create_contract(abi, bytecode):
 
 
 contract_interface = {}
-with open('./bin/copyrights_sol_UserRecords.bin',  'r') as f:
+with open('./backend/bin/copyrights_sol_UserRecords.bin',  'r') as f:
         contract_interface['bin'] = f.read() 
 
-with open("./bin/copyrights_sol_UserRecords.abi",  'r') as f:
+with open("./backend/bin/copyrights_sol_UserRecords.abi",  'r') as f:
     contract_interface['abi'] = f.read() 
 
 contract = create_contract(contract_interface['abi'] , contract_interface['bin'])
-print(list(contract.functions))
+# print(list(contract.functions))
 
