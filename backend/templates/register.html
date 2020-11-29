@@ -6,6 +6,25 @@
 {% endblock %}
 
 {% block body %}
+
+<div class="container">
+    <div class="nav-wrapper">
+        <div class="left-side">
+          <div class="nav-link-wrapper active-nav-link">
+            <a href="{{url_for('register')}}">Register</a>
+          </div>
+          <div class="nav-link-wrapper">
+            <a href="{{url_for('login')}}">Login</a>
+          </div>
+          <div class="nav-link-wrapper">
+            <a href="{{url_for('main')}}">Main</a>
+          </div>
+          <div class="nav-link-wrapper">
+            <a href="{{url_for('home')}}">About</a>
+          </div>
+        </div>
+      </div>
+</div>
 <div class="content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
