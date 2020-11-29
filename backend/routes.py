@@ -1,6 +1,6 @@
 from backend import app , db ,  bcrypt
 from flask import render_template, url_for, flash, redirect, request, abort
-from backend.contract import contract #function to contract blockchain
+from backend.contract import contract , w3 #function to contract blockchain
 from flask_login import login_user, current_user, logout_user, login_required
 from backend.forms import  LoginForm , RegisterForm
 from backend.models import User 
@@ -25,7 +25,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('main'))
         else:
             flash('Login Unsuccessful. Please check eth address and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -55,16 +55,23 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
+@app.route("/main")
+def main():
+    return render_template('main.html')
+
 @app.route("/createtoken" , methods=["GET" , "POST"])
 @login_required
 def createtoken():
+    print(current_user)
+    print(list(contract.functions))
     try:
         #not sure about this part i havent tested it yet
-        contract.functions.createtoken(current_user.eth_address).call()
+        contract.functions.createtoken(str(current_user.eth_address)).call()
         flash('Your token has been created!', 'success')
         return redirect(url_for('login'))
 
-    except:
+    except Exception as e:
+        print(e , type(e) )
         flash("Error occured while processing please try again " ,'danger')
         return render_template('main.html')#change this
 
@@ -72,8 +79,10 @@ def createtoken():
 @app.route('/transfertokens', methods=["GET" , "POST"])
 @login_required
 def transfertokens():
+    print(current_user)
+    print(type(request), request , request.args , request.data)
     try:
-        contract.functions.transfertokens(current_user.eth_address, request.data['token']).call()
+        contract.functions.transfertokens(request.args['eth_address'], request.args['token']).call()
         flash("transaction successful" , 'success')
         return redirect(url_for('main.html'))
     except:
@@ -84,7 +93,8 @@ def transfertokens():
 @app.route('/getnumberoftokens')
 def getnumberoftokens():
     try:
-        return contract.functions.getnumberoftokens().call()
+        ret = contract.functions.getnumberoftokens().call()
+        return str(ret)
         # flash("transaction successful" , 'success')
         # return redirect(url_for('main.html'))
     except:
@@ -95,8 +105,8 @@ def getnumberoftokens():
 @app.route('/getUserCount')
 def getUserCount():
     try:
-        return contract.functions.getUserCount().call()
-    
+        ret = contract.functions.getUserCount().call()
+        return str(ret)
     except:
         flash("Error occured while processing please try again " ,'danger')
         return render_template('main.html')#change this 
@@ -107,8 +117,8 @@ def getUserCount():
 @app.route("/getnumberoftokenownedbyuser")
 def getnumberoftokenownedbyuser():
     try:
-        return contract.functions.getnumberoftokenownedbyuser(request.args.get('eth_address')).call()
-    
+        ret= contract.functions.getnumberoftokenownedbyuser(request.args.get('eth_address')).call()
+        return str(ret)
     except:
         flash("Error occured while processing please try again " ,'danger')
         return render_template('main.html')#change this 
@@ -117,7 +127,8 @@ def getnumberoftokenownedbyuser():
 @app.route("/getUserinfo")
 def getUserinfo():
     try :
-        return contract.functions.getUserinfo(request.args.get("eth_address")).call()
+        ret = contract.functions.getUserinfo(request.args.get("eth_address")).call()
+        return str(ret)
     except:
         flash("Error occured while processing please try again " ,'danger')
         return render_template('main.html')#change this 
@@ -125,13 +136,14 @@ def getUserinfo():
 @app.route("/gettokenowner")
 def gettokenowner():
     try :
-        return contract.functions.gettokenowner(request.args.get("id")).call()
+        ret = contract.functions.gettokenowner(request.args.get("id")).call()
+        return str(ret)
     except:
         flash("Error occured while processing please try again " ,'danger')
         return render_template('main.html')#change this 
 
 @app.route("/logout")
 def logout():
-    # logout_user()
+    logout_user()
     return redirect(url_for('home'))
 

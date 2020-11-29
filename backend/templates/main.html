@@ -2,41 +2,102 @@
 
 {% block head %}
 <title>Copyright Management</title>
+<!-- boot strap cdn  -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+crossorigin="anonymous"></script>
 {% endblock %}
 
 
 {% block body %}
-    
+<!-- <nav class="navbar navbar-dark bg-dark"> -->
+  <!-- Navbar content -->
+<!-- </nav> -->
+
 	<center>
-    <form >
+    <!-- <form > -->
+      <br>
+      <br>
+      <br>
+      <br>
 	    
     <div class = "functions call">
       <textarea class="right_desc" rows="4" cols="50" placeholder="enter the copyright description......"></textarea>
       <br>
       <br>
       <a class = "cr" href = "{{ url_for('createtoken') }}" ><button> CreateToken</button> </a>
-    </br>
-    <br>
-      <a class = "tft" href = "{{ url_for('transfertokens') }}" ><button> TransferTokens</button> </a>
+      <br>
+      <br>
+      <form class="form-inline" action='{{url_for("transfertokens")}}' method="get">
+        
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="bc_eth_Address" class="sr-only">to address</label>
+          <input type="text" class="form-control" id="bc_eth_Address" placeholder="to addresss" name=eth_address>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="tokenid" class="sr-only">tokenid </label>
+          <input type="text" class="form-control"  id="tokenid" placeholder="Tokenid" name=token>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Transfer Token </button>
+      </form>
+    
+    
+   
+      <!-- <a class = "tft" href = "{{ url_for('transfertokens') }}" ><button> TransferTokens</button> </a> -->
     </br>
     <br>
       <a class = "tnft" href = "{{ url_for('getnumberoftokens') }}" ><button> getnumberoftokens</button> </a>
     </br>
-    <br>
+    <br>  
       <a class = "tut" href = "{{ url_for('getUserCount') }}" ><button> getUserCount</button> </a>
     </br>
     <br>
-      <a class = "tngot" href = "{{ url_for('getnumberoftokenownedbyuser') }}" ><button> getnumberoftokenownedbyuser</button> </a>
+      <!-- <a class = "tngot" href = "{{ url_for('getnumberoftokenownedbyuser') }}" ><button> getnumberoftokenownedbyuser</button> </a> -->
+      <form class="form-inline" action='{{url_for("getnumberoftokenownedbyuser")}}' method="get">
+        
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="bc_eth_Address2" class="sr-only">eth address</label>
+          <input type="text" class="form-control" id="bc_eth_Address2" placeholder="eth addresss" name=eth_address>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mb-2">Check user Tokens </button>
+      </form>
+    </br>
+      <br>
+      <!-- <a class = "tuit" href = "{{ url_for('getUserinfo') }}" ><button> getUserinfo</button> </a> -->
+      <form class="form-inline" action='{{url_for("getUserinfo")}}' method="get">
+        
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="bc_eth_Address3" class="sr-only">eth address</label>
+          <input type="text" class="form-control" id="bc_eth_Address3" placeholder="eth addresss" name=eth_address>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mb-2">Check user info  </button>
+      </form>
     </br>
     <br>
-      <a class = "tuit" href = "{{ url_for('getUserinfo') }}" ><button> getUserinfo</button> </a>
-    </br>
-    <br>
-      <a class = "tot" href = "{{ url_for('gettokenowner') }}" ><button> gettokenowner</button> </a>
+      <!-- <a class = "tot" href = "{{ url_for('gettokenowner') }}" ><button> gettokenowner</button> </a> -->
+      <form class="form-inline" action='{{url_for("gettokenowner")}}' method="get">
+        
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="tokenID" class="sr-only">eth address</label>
+          <input type="text" class="form-control" id="tokenID" placeholder="Token Id" name="id">
+        </div>
+        
+        <button type="submit" class="btn btn-primary mb-2">check user of this token </button>
+      </form>
+    
     </br>
    
     </div> 
-    </form>
+   
   
   </center>
  
