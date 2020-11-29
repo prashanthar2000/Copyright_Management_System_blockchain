@@ -1,9 +1,12 @@
-from backend import app , db ,  bcrypt
+from backend import app , db ,  bcrypt , contract
 from flask import render_template, url_for, flash, redirect, request, abort
-from backend.contract import contract , w3 #function to contract blockchain
+# from backend.contract import contract , w3 #function to contract blockchain
 from flask_login import login_user, current_user, logout_user, login_required
 from backend.forms import  LoginForm , RegisterForm
 from backend.models import User 
+from backend.contract import create_contract
+
+from backend import contract
 
 
 @app.route('/')
@@ -39,7 +42,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         try:
-            if contract.functions.insertUser(form.eth_address.data ,form.username.data, "owner" ).call():
+            if contract.functions.insertUser(str(form.eth_address.data) ,str(form.username.data), "owner" ).transact():
                 hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
                 user = User(username=form.username.data, eth_address=form.eth_address.data, password=hashed_password)
                 db.session.add(user)
@@ -66,7 +69,7 @@ def createtoken():
     print(list(contract.functions))
     try:
         #not sure about this part i havent tested it yet
-        contract.functions.createtoken(str(current_user.eth_address)).call()
+        contract.functions.createtoken(str(current_user.eth_address)).transact()
         flash('Your token has been created!', 'success')
         return redirect(url_for('login'))
 
@@ -82,7 +85,7 @@ def transfertokens():
     print(current_user)
     print(type(request), request , request.args , request.data)
     try:
-        contract.functions.transfertokens(request.args['eth_address'], request.args['token']).call()
+        contract.functions.transfertokens(request.args['eth_address'], request.args['token']).transact()
         flash("transaction successful" , 'success')
         return redirect(url_for('main.html'))
     except:
