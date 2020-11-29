@@ -1,23 +1,29 @@
 {% extends "base.html" %}
+
 {%block head%}
-
- <!-- boot strap cdn  -->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
- integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
- integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
- integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
- crossorigin="anonymous"></script>
-
-
- {%endblock head%}
+<title>Copyright Management</title>
+ {%endblock %}
 {% block body %}
+<div class="container">
+    <div class="nav-wrapper">
+        <div class="left-side">
+          <div class="nav-link-wrapper">
+            <a href="{{url_for('register')}}">Register</a>
+          </div>
+          <div class="nav-link-wrapper active-nav-link">
+            <a href="{{url_for('login')}}">Login</a>
+          </div>
+          <div class="nav-link-wrapper">
+            <a href="{{url_for('main')}}">Main</a>
+          </div>
+          <div class="nav-link-wrapper">
+            <a href="{{url_for('home')}}">About</a>
+          </div>
+        </div>
+      </div>
+</div>
     <div class="content-section">
-        <form method="POST" action="">
+        <form method="POST" action="/main.html">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Log In</legend>
@@ -65,4 +71,4 @@
             Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
         </small>
     </div>
-{% endblock body %}
+{% endblock %}
