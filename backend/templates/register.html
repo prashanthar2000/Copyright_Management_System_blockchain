@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title>Copyright Management</title>
+{% endblock %}
+
+{% block body %}
+<div class="content-section">
+    <form method="POST" action="/login.html">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Log In</legend>
+            <div class="form-group">
+                {{ form.eth_address.label(class="form-control-label") }}
+                {{ form.eth_address(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {{ form.password(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.username.label }}<br>
+                {{ form.username(class="form-control form-control-lg")}}
+            </div>
+        </fieldset>
+        <div class = "form-submit">
+            <input type  = "submit" value = "Submit">
+        </div>
+    </form>
+</div>
+{% endblock %}
