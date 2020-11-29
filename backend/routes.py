@@ -9,7 +9,7 @@ from backend.contract import create_contract
 from backend import contract
 
 
-@app.route('/')
+@app.route('/home')
 def home():
     return render_template('about.html')
     
@@ -18,7 +18,7 @@ def home():
 
 
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
