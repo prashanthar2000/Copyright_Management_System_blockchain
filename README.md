@@ -11,3 +11,11 @@ python contract.py
 u can see contract deployment hash ...etc in ganache 
 u can all the function by using contract.function.functionname.call()
 
+
+
+##### create site.db
+rm backend/site.db
+#in python interpreter 
+from backend import db 
+db.create_all()
+

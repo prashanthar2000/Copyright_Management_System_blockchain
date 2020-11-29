@@ -6,20 +6,20 @@ from wtforms import validators
 from backend.models import User
 
 # import re
-address_pat = r"0x[0-9a-fA-]{32}"
+address_pat = r"0x[0-9a-fA-F]+"
 
 
 class LoginForm(FlaskForm):
     # email = StringField('Email',validators=[DataRequired(), Email()])
     eth_address = StringField('eth_address',[
-        validators.Regexp(address_pat, message="Username must contain only letters numbers or underscore")])
+        validators.Regexp(address_pat, message="eth address must contain hex-decimal digits as input only")])
     
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
 class RegisterForm(FlaskForm):
-    eth_address = StringField('eth_address' ,[validators.Regexp(address_pat, message="Username must contain only letters numbers or underscore")])
+    eth_address = StringField('eth_address' ,[validators.Regexp(address_pat, message="eth address must contain hex-decimal digits as input only")])
     password = PasswordField('Password', validators=[DataRequired()])
     username = StringField('Username' , validators=[DataRequired()]) 
        
