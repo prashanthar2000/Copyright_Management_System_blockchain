@@ -6,39 +6,38 @@
 
 
 {% block body %}
-    <div class="container">
-        <div class = "index_wrapper">
-            <h1>Copyright Management</h1>
-        </div>
-        
-            <div class="nav-wrapper">
-              <div class="left-side">
-                <div class="nav-link-wrapper active-nav-link">
-                  <a href="{{url_for('login')}}">Login</a>
-                </div>
-        
-                <div class="nav-link-wrapper">
-                  <a href="{{url_for('home')}}">About</a>
-                </div>
-              </div>
-            </div>
     
-        <br>
 	<center>
-    
-	<form action="/submit" id="textform" method="post">
-	    <textarea class="right_desc" rows="4" cols="50" placeholder="enter the copyright description......"></textarea>
+    <form >
+	    
+    <div class = "functions call">
+      <textarea class="right_desc" rows="4" cols="50" placeholder="enter the copyright description......"></textarea>
+      <br>
+      <br>
+      <a class = "cr" href = "{{ url_for('createtoken') }}" ><button> CreateToken</button> </a>
     </br>
     <br>
-	    <input type="text" name="author" placeholder="Your name">
-        <input type="submit" value="Post">
+      <a class = "tft" href = "{{ url_for('transfertokens') }}" ><button> TransferTokens</button> </a>
     </br>
     <br>
-        <input type="text" name="author" placeholder="priviledgelevel">
-        <input type="submit" value="Post">
+      <a class = "tnft" href = "{{ url_for('getnumberoftokens') }}" ><button> getnumberoftokens</button> </a>
     </br>
-	</form>
-	</center>
-
-    </div>
+    <br>
+      <a class = "tut" href = "{{ url_for('getUserCount') }}" ><button> getUserCount</button> </a>
+    </br>
+    <br>
+      <a class = "tngot" href = "{{ url_for('getnumberoftokenownedbyuser') }}" ><button> getnumberoftokenownedbyuser</button> </a>
+    </br>
+    <br>
+      <a class = "tuit" href = "{{ url_for('getUserinfo') }}" ><button> getUserinfo</button> </a>
+    </br>
+    <br>
+      <a class = "tot" href = "{{ url_for('gettokenowner') }}" ><button> gettokenowner</button> </a>
+    </br>
+   
+    </div> 
+    </form>
+  
+  </center>
+ 
 {% endblock %}
