@@ -6,29 +6,39 @@
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 {% endblock %}
 {% block body %}
+
   <div class="container">
-    <div class="nav-wrapper">
-      <div class="left-side">
-        <div class="nav-link-wrapper">
-          <a href="{{url_for('login')}}">Home</a>
+      <div class="nav-wrapper">
+          <div class="left-side">
+            <div class="nav-link-wrapper">
+              <a href="{{url_for('register')}}">Register</a>
+            </div>
+            <div class="nav-link-wrapper">
+              <a href="{{url_for('login')}}">Login</a>
+            </div>
+            <div class="nav-link-wrapper">
+              <a href="{{url_for('main')}}">Main</a>
+            </div>
+            <div class="nav-link-wrapper active-nav-link">
+              <a href="{{url_for('home')}}">About</a>
+            </div>
+  
+           
+          </div>
         </div>
-
-        <div class="nav-link-wrapper active-nav-link">
-          <a href="{{url_for('main')}}">About</a>
-        </div>
-      </div>
-
-    </div>
-
+     
+    
     <div class="content-wrapper">
       <div class="two-column-wrapper">
         <div class="profile-image-wrapper">
-          <img src="images/copyright.jpg" alt="">
+          <img src="{{ url_for('static', filename='copyright.jpg') }}" alt="" width = "100" height = "400">
         </div>
 
         <div class="profile-content-wrapper">
           <h1>Hi, thanks for visiting this site.</h1>
-          <p>
+          <p> This platform provides a way for the copyright owners to decentralise the copyrights of their 
+            creative work. 
+            The main objective of this platform is to provide a universal ledger holding all the copyright ownership. It performs functions such as checking for the copyrights, controlling transaction and ownership of it, making it easier to find who has what owner of work, prevents faking etc.	
           </p>
 
           <p></p>
