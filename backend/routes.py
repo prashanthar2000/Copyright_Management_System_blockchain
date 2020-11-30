@@ -71,7 +71,7 @@ def createtoken():
         #not sure about this part i havent tested it yet
         contract.functions.createtoken(str(current_user.eth_address)).transact()
         flash('Your token has been created!', 'success')
-        return redirect(url_for('login'))
+        return render_template('main.html')
 
     except Exception as e:
         print(e , type(e) )
@@ -85,10 +85,12 @@ def transfertokens():
     print(current_user)
     print(type(request), request , request.args , request.data)
     try:
-        contract.functions.transfertokens(request.args['eth_address'], request.args['token']).transact()
+        contract.functions.transfertokens(str(current_user.eth_address), str(request.args['eth_address']), int(request.args['token'])).transact()
         flash("transaction successful" , 'success')
         return redirect(url_for('main.html'))
-    except:
+    except Exception as e:
+        print(current_user.eth_address , request.args)
+        print(e , type(e) )
         flash("Error occured while processing please try again " ,'danger')
         return render_template('main.html')#change this 
 
@@ -122,7 +124,8 @@ def getnumberoftokenownedbyuser():
     try:
         ret= contract.functions.getnumberoftokenownedbyuser(request.args.get('eth_address')).call()
         return str(ret)
-    except:
+    except Exception as e:
+        print(e , type(e))
         flash("Error occured while processing please try again " ,'danger')
         return render_template('main.html')#change this 
     
@@ -138,10 +141,12 @@ def getUserinfo():
 
 @app.route("/gettokenowner")
 def gettokenowner():
+    print(request.args)
     try :
         ret = contract.functions.gettokenowner(request.args.get("id")).call()
         return str(ret)
-    except:
+    except Exception as e:
+        print(e , type(e))
         flash("Error occured while processing please try again " ,'danger')
         return render_template('main.html')#change this 
 

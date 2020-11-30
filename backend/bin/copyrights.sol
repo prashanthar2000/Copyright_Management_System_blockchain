@@ -733,10 +733,10 @@ contract UserRecords is ERC721("CopyRightManagement","CRM") {
   }
 
   //transfer tokens
-  function transfertokens(address to, uint256 tokenId)    public     
+  function transfertokens(address from , address to, uint256 tokenId)    public     
     returns(bool success)
   {
-    address from=msg.sender;
+    // address from=msg.sender;
     safeTransferFrom(from, to, tokenId, "");
     if (ownerOf(tokenId)==to){ 
       incrementUserTokens( users[to].nodeid);
