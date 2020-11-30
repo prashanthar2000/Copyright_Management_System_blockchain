@@ -143,7 +143,7 @@ def getUserinfo():
 def gettokenowner():
     print(request.args)
     try :
-        ret = contract.functions.gettokenowner(request.args.get("id")).call()
+        ret = contract.functions.gettokenowner(int(request.args.get("id"))).call()
         return str(ret)
     except Exception as e:
         print(e , type(e))
