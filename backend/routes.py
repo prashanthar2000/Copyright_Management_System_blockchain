@@ -27,8 +27,9 @@ def login():
         user = User.query.filter_by(eth_address=form.eth_address.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('main'))
+            return redirect(url_for('main'))
+            # next_page = request.args.get('next')
+            # return redirect(next_page) if next_page else redirect(url_for('main'))
         else:
             flash('Login Unsuccessful. Please check eth address and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -83,11 +84,12 @@ def createtoken():
 @login_required
 def transfertokens():
     print(current_user)
-    print(type(request), request , request.args , request.data)
+    # print(type(request), request , request.args , request.data)
+    print(str(current_user.eth_address), str(request.args['eth_address']), int(request.args['token']))
     try:
         contract.functions.transfertokens(str(current_user.eth_address), str(request.args['eth_address']), int(request.args['token'])).transact()
         flash("transaction successful" , 'success')
-        return redirect(url_for('main.html'))
+        return render_template('main.html')
     except Exception as e:
         print(current_user.eth_address , request.args)
         print(e , type(e) )
