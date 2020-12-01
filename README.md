@@ -4,18 +4,14 @@ Blockchain for Copyright management. This platform can be used to commit and ver
 
 ### How to run
 
-Clone the git repository or download zip from.
-
-https://github.com/prashanthar2000/Copyright_Management_System_blockchain
-
-Extract the file and store it in the directory with all python installations.
+Clone the git repository or download zip,
+store the folder in the path of python.
  Then do 
 cd  Copyright_Management_System_blockchain-master
-
 pip install -r requirement.txt
 
 in one terminal run
- ganache-cli 
+ganache-cli 
 
 in another terminal run 
 python3 app.py
